@@ -45,25 +45,36 @@ export async function handleSearch() {
   } finally {
     loader.style.display = "none";
   }
-}
-// Dark mode toggle
-const darkToggle = document.getElementById('darkToggle');
-darkToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  darkToggle.textContent = document.body.classList.contains('dark')
-    ? '☀️ Light Mode'
-    : '🌙 Dark Mode';
-});
-// Button-based search
-document.getElementById("searchBtn").addEventListener("click", handleSearch);
+}// Wait until DOM is fully loaded
+window.addEventListener('DOMContentLoaded', () => {
+  // Dark mode toggle
+  const darkToggle = document.getElementById('darkToggle');
+  if (darkToggle) {
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      darkToggle.textContent = document.body.classList.contains('dark')
+        ? '☀️ Light Mode'
+        : '🌙 Dark Mode';
+    });
+  }
 
-// Live search with debounce
-let debounceTimer;
-document.getElementById("searchInput").addEventListener("input", () => {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    handleSearch();
-  }, 500); // wait 500ms after typing stops
+  // Button-based search
+  const searchBtn = document.getElementById("searchBtn");
+  if (searchBtn) {
+    searchBtn.addEventListener("click", handleSearch);
+  }
+
+  // Live search with debounce
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    let debounceTimer;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        handleSearch();
+      }, 500);
+    });
+  }
 });
 
 // Expose globally (optional, for inline event use)
