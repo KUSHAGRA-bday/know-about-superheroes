@@ -1,4 +1,4 @@
-import { fetchSearchResults } from '../api/superheroes.js';
+// import { fetchSearchResults } from '../api/superheroes.js';
 
 export async function handleSearch() {
   const loader = document.getElementById("loader");
