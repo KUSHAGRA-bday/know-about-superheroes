@@ -48,8 +48,6 @@ export async function handleSearch() {
 }
 
 // Accessibility: trigger search on Enter
-document.getElementById("searchInput").addEventListener("keydown", e => {
-  if (e.key === "Enter") handleSearch();
-});
+document.getElementById("searchBtn").addEventListener("click", handleSearch);
 
 window.handleSearch = handleSearch;
