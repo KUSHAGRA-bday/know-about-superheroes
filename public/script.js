@@ -46,7 +46,14 @@ export async function handleSearch() {
     loader.style.display = "none";
   }
 }
-
+// Dark mode toggle
+const darkToggle = document.getElementById('darkToggle');
+darkToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  darkToggle.textContent = document.body.classList.contains('dark')
+    ? '☀️ Light Mode'
+    : '🌙 Dark Mode';
+});
 // Button-based search
 document.getElementById("searchBtn").addEventListener("click", handleSearch);
 
