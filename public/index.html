@@ -3,39 +3,64 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search About Superheroes</title>
   <link rel="icon" href="data:;">
   <style>
+    :root {
+      --bg-color: #f4f6fa;
+      --container-bg: #fff;
+      --text-color: #444;
+      --card-bg: #f9fafb;
+      --primary: #3498db;
+      --primary-dark: #217dbb;
+    }
+
+    body.dark {
+      --bg-color: #1e1e2f;
+      --container-bg: #2a2a3b;
+      --text-color: #ddd;
+      --card-bg: #333344;
+      --primary: #00bfff;
+      --primary-dark: #0094cc;
+    }
+
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6fa;
+      background: var(--bg-color);
+      color: var(--text-color);
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      font-size: 1.08rem;
+      transition: background 0.3s, color 0.3s;
     }
 
     .container {
-      height: 60vh;
-      width: 800px;
+      max-width: 800px;
+      width: 92%;
       margin: 60px auto 32px auto;
-      background: #fff;
+      background: var(--container-bg);
       border-radius: 12px;
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
       padding: 32px 28px 24px 28px;
+      transition: background 0.3s;
     }
 
     h2 {
       text-align: center;
-      color: #3498db;
+      color: var(--primary);
       margin-bottom: 24px;
       font-weight: 600;
       letter-spacing: 1px;
+      font-size: 2rem;
     }
 
     .search-bar {
       display: flex;
       gap: 12px;
       margin-bottom: 18px;
+      flex-wrap: wrap;
     }
 
     #searchInput {
@@ -43,29 +68,40 @@
       padding: 10px 14px;
       border: 3px solid #d1d5db;
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 1.08rem;
       transition: border-color 0.2s;
       outline: none;
+      min-width: 200px;
     }
 
     #searchInput:focus {
-      border-color: #3498db;
+      border-color: var(--primary);
     }
 
     button {
-      background: #3498db;
+      background: var(--primary);
       color: #fff;
       border: none;
       border-radius: 6px;
       padding: 10px 22px;
-      font-size: 1rem;
+      font-size: 1.08rem;
       cursor: pointer;
       font-weight: 500;
       transition: background 0.2s;
     }
 
     button:hover {
-      background: #217dbb;
+      background: var(--primary-dark);
+    }
+
+    #darkToggle {
+      margin-top: -10px;
+      float: right;
+      font-size: 0.9rem;
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 6px 10px;
     }
 
     #loader {
@@ -85,7 +121,7 @@
       width: 60px;
       height: 60px;
       border: 6px solid #e3e3e3;
-      border-top: 6px solid #3498db;
+      border-top: 6px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -101,12 +137,12 @@
     }
 
     .result-card {
-      background: #f9fafb;
+      background: var(--card-bg);
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(52, 152, 219, 0.07);
       padding: 16px 18px;
       margin-bottom: 14px;
-      border-left: 4px solid #3498db;
+      border-left: 4px solid var(--primary);
       transition: box-shadow 0.2s;
     }
 
@@ -115,155 +151,41 @@
     }
 
     .result-title {
-      font-size: 1.08rem;
+      font-size: 1.18rem;
       font-weight: 600;
-      color: #217dbb;
+      color: var(--primary-dark);
       margin-bottom: 6px;
     }
 
     .result-body {
-      font-size: 0.98rem;
-      color: #444;
+      font-size: 1.08rem;
     }
 
+    /* Responsive */
     @media (max-width: 600px) {
-      body {
-        font-size: 1.18rem;
-        padding: 0;
-        margin: 0;
-      }
-
-      .container {
-        width: 100vw;
-        min-height: 100vh;
-        margin: 0;
-        padding: 18px 2vw 18px 2vw;
-        border-radius: 0;
-        box-shadow: none;
-        transform: scale(1.08);
-        transform-origin: top center;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-        margin-bottom: 18px;
-        text-align: center;
-      }
-
       .search-bar {
-        display: flex;
         flex-direction: column;
-        gap: 0;
-        margin-bottom: 18px;
-        width: 100%;
       }
 
-      #searchInput {
-        font-size: 1.25rem;
-        padding: 18px 16px;
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 12px;
-        border-width: 2px;
-      }
-
+      #searchInput,
       button {
-        font-size: 1.25rem;
-        padding: 18px 0;
         width: 100%;
-        box-sizing: border-box;
-        margin: 0;
-        border-radius: 8px;
-      }
-
-      .result-card {
-        padding: 20px 12px;
-        margin-bottom: 14px;
-        font-size: 1.22rem;
-        border-radius: 12px;
+        font-size: 1rem;
+        padding: 10px;
       }
 
       .result-title {
-        font-size: 1.28rem;
-        margin-bottom: 8px;
+        font-size: 1.1rem;
       }
 
       .result-body {
-        font-size: 1.18rem;
+        font-size: 1rem;
       }
 
       .spinner {
-        width: 48px;
-        height: 48px;
-        border-width: 7px;
-      }
-    }
-
-    @media (max-width: 500px) {
-      body {
-        font-size: 1.15rem;
-      }
-
-      .container {
-        width: 100vw;
-        height: 100vh;
-        padding: 22px 2vw 18px 2vw;
-        margin: 18px auto 18px auto;
-        border-radius: 12px;
-        min-height: unset;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-        transform: scale(1.04);
-        transform-origin: top center;
-      }
-
-      h2 {
-        font-size: 1.45rem;
-        margin-bottom: 20px;
-      }
-
-      .search-bar {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        margin-bottom: 18px;
-      }
-
-      #searchInput {
-        font-size: 1.25rem;
-        padding: 16px 16px;
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 12px;
-      }
-
-      button {
-        font-size: 1.25rem;
-        padding: 16px 0;
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0;
-      }
-
-      .result-card {
-        padding: 18px 14px;
-        margin-bottom: 14px;
-        font-size: 1.18rem;
-        border-radius: 10px;
-      }
-
-      .result-title {
-        font-size: 1.22rem;
-        margin-bottom: 8px;
-      }
-
-      .result-body {
-        font-size: 1.15rem;
-      }
-
-      .spinner {
-        width: 54px;
-        height: 54px;
-        border-width: 7px;
+        width: 50px;
+        height: 50px;
+        border-width: 5px;
       }
     }
   </style>
@@ -271,11 +193,12 @@
 
 <body>
   <div class="container">
+    <button id="darkToggle">🌙 Dark Mode</button>
     <h2>🔎 Search About Superheroes</h2>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search Superheroes..." aria-label="Search Superheroes" />
-      <button id="searchBtn" aria-label="Search">Search</button>
-    </div>
+    <form class="search-bar" onsubmit="event.preventDefault();">
+      <input type="text" id="searchInput" placeholder="Search Superheroes..." autocomplete="off" />
+      <button type="submit">Search</button>
+    </form>
     <div id="results"></div>
   </div>
 

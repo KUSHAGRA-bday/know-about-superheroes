@@ -1,4 +1,4 @@
-// import { fetchSearchResults } from '../api/superheroes.js';
+// JS MODULE
 
 export async function handleSearch() {
   const loader = document.getElementById("loader");
@@ -47,17 +47,27 @@ export async function handleSearch() {
   }
 }
 
-// Accessibility: trigger search on Enter
+// Button-based search
 document.getElementById("searchBtn").addEventListener("click", handleSearch);
 
+// Live search with debounce
+let debounceTimer;
+document.getElementById("searchInput").addEventListener("input", () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    handleSearch();
+  }, 500); // wait 500ms after typing stops
+});
+
+// Expose globally (optional, for inline event use)
 window.handleSearch = handleSearch;
 
 export async function fetchSearchResults(query) {
-    if (!query) return [];
-    const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
-    const data = await res.json();
-    if (data.response === "success") {
-        return data.results;
-    }
-    return [];
+  if (!query) return [];
+  const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+  const data = await res.json();
+  if (data.response === "success") {
+    return data.results;
+  }
+  return [];
 }
