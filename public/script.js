@@ -51,3 +51,13 @@ export async function handleSearch() {
 document.getElementById("searchBtn").addEventListener("click", handleSearch);
 
 window.handleSearch = handleSearch;
+
+export async function fetchSearchResults(query) {
+    if (!query) return [];
+    const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    if (data.response === "success") {
+        return data.results;
+    }
+    return [];
+}
